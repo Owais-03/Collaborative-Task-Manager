@@ -42,11 +42,9 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-// CORS configuration
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handle preflight requests
 
-// Remove or update the manual CORS headers middleware to dynamically reflect the request origin:
+// Handle preflight requests for all routes
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -61,6 +59,9 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin,X-Requested-With,Content-Type,Accept,Authorization,Cookie"
   );
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
   next();
 });
 

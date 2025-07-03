@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser } from "../../redux/authSlice";
+import { setLoading, setUser, loginAndStoreToken } from "../../redux/authSlice";
 import { USER_API_END_POINT } from '../../utils/constant';
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -37,17 +37,12 @@ const Signin = () => {
     },
     validationSchema: Yup.object(signinSchema),
     onSubmit: async (values) => {
-      console.log(values);
       try {
         dispatch(setLoading(true));
-        const res = await axios.post(
-          `${USER_API_END_POINT}/signin`,
-          values,
-          { withCredentials: true }
-        );
-        if (res.data.success) {
-          dispatch(setUser(res.data.user));
-          toast.success(res.data.message);
+        const res = await loginAndStoreToken(values);
+        if (res.success) {
+          dispatch(setUser(res.user));
+          toast.success(res.message);
         }
       } catch (err: any) {
         toast.error(err.response?.data?.message);
@@ -144,5 +139,6 @@ const Signin = () => {
     </div>
   );
 };
+
 
 export default Signin;
