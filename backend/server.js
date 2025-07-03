@@ -18,8 +18,21 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5007;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://collaborative-task-manager-ia2r.onrender.com"
+];
+
 const corsOptions = {
-  origin: ["http://localhost:5173", "*"],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
@@ -31,9 +44,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Handle preflight requests
 
-// Additional CORS headers for better compatibility
+// Remove or update the manual CORS headers middleware to dynamically reflect the request origin:
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Methods",
