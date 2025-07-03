@@ -1,7 +1,13 @@
+# Global gitignore for both frontend and backend
+
 # Node modules
 node_modules/
+**/node_modules/
+
+# Build output
 dist/
 dist-ssr/
+build/
 *.log
 
 # Local env files
@@ -11,6 +17,7 @@ dist-ssr/
 
 # OS files
 .DS_Store
+Thumbs.db
 
 # Editor folders
 .vscode/
@@ -21,8 +28,20 @@ dist-ssr/
 *.sln
 *.sw?
 
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
 # Vite cache
-.vite/
+**/.vite/
+
+# Redux persist storage (if any)
+**/persist:*
+
+# Coverage
+coverage/
+.nyc_output/
 
 # Misc
 npm-debug.log*
