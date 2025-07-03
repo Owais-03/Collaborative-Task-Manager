@@ -15,10 +15,6 @@ dist/
 .vscode/
 .idea/
 *.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 .cph/
 
 # Misc

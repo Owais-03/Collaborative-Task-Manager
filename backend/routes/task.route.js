@@ -11,7 +11,7 @@ router.route("/assignee/:assignee")
   .get(isAuthenticated, getTasksByAssignee);
 
 router.route("/")
-  .get(isAuthenticated, getTasks)
+  .get(getTasks) // <-- Remove isAuthenticated for GET only
   .post(isAuthenticated, createTask);
 
 router.route("/:id")
