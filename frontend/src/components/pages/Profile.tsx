@@ -25,16 +25,16 @@ const Profile = () => {
         <Card variant="outlined" sx={{ borderRadius: 4, boxShadow: 3 }}>
           <CardContent>
             <Grid container justifyContent="space-between" alignItems="center">
-              <Grid item>
+              <Grid item xs="auto">
                 <Grid container alignItems="center" spacing={2}>
-                  <Grid item>
+                  <Grid item xs="auto">
                     <Avatar
                       src={user?.profile?.profilePhoto}
                       alt="profile"
                       sx={{ width: 96, height: 96 }}
                     />
                   </Grid>
-                  <Grid item>
+                  <Grid item xs="auto">
                     <Typography variant="h5" fontWeight="medium">
                       {user?.fullname}
                     </Typography>
@@ -44,7 +44,7 @@ const Profile = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item>
+              <Grid item xs="auto">
                 <IconButton onClick={() => setOpen(true)} color="primary">
                   <EditIcon />
                 </IconButton>
@@ -73,6 +73,19 @@ const Profile = () => {
                   : 'N/A'}
               </Typography>
             </Box>
+          </CardContent>
+        </Card>
+        {/* Bio Section */}
+        <Card variant="outlined" sx={{ borderRadius: 4, boxShadow: 1, mt: 3 }}>
+          <CardContent>
+            <Typography variant="h6" fontWeight="medium" gutterBottom>
+              Bio
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {user?.profile?.bio
+                ? user.profile.bio
+                : 'No bio set. Click the edit button to add your bio.'}
+            </Typography>
           </CardContent>
         </Card>
       </Box>
