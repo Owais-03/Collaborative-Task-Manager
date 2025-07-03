@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 // Define the state interface
 export interface AuthState {
@@ -39,17 +38,3 @@ const authSlice = createSlice({
 
 export const { setLoading, setUser } = authSlice.actions;
 export default authSlice.reducer;
-
-// Helper function for login to store JWT token in localStorage
-export const loginAndStoreToken = async (payload: any) => {
-    const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_API_URL}/user/signin`,
-        payload,
-        { withCredentials: true }
-    );
-    if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-    }
-    return response.data;
-};
-

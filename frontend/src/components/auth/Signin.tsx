@@ -2,11 +2,9 @@ import { useEffect } from "react";
 import Navbar from "../shared/Navbar";
 import Footer from "../shared/Footer";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser, loginAndStoreToken } from "../../redux/authSlice";
-import { USER_API_END_POINT } from '../../utils/constant';
+import { setLoading, setUser } from "../../redux/authSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -16,6 +14,8 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/constant";
 
 
 const signinSchema = {
@@ -29,8 +29,21 @@ const Signin = () => {
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // Helper function for login to store JWT token in localStorage
 
-  const formik = useFormik({
+  const loginAndStoreToken = async (payload: any) => {
+    const response = await axios.post(
+      `${USER_API_END_POINT}/signin`,
+      payload,
+      { withCredentials: true }
+    );
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+    }
+    return response.data;
+  };
+
+    const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -38,19 +51,19 @@ const Signin = () => {
     validationSchema: Yup.object(signinSchema),
     onSubmit: async (values) => {
       try {
-        dispatch(setLoading(true));
-        const res = await loginAndStoreToken(values);
-        if (res.success) {
-          dispatch(setUser(res.user));
-          toast.success(res.message);
-        }
+      dispatch(setLoading(true));
+      const res = await loginAndStoreToken(values);
+      if (res.success) {
+        dispatch(setUser(res.user));
+        toast.success(res.message);
+      }
       } catch (err: any) {
-        toast.error(err.response?.data?.message);
+      toast.error(err.response?.data?.message);
       } finally {
-        dispatch(setLoading(false));
+      dispatch(setLoading(false));
       }
     }
-  });
+    });
 
    useEffect(() => {
     if (user) {
