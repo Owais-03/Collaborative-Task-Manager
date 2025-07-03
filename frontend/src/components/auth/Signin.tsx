@@ -43,7 +43,7 @@ const Signin = () => {
     return response.data;
   };
 
-    const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -51,16 +51,17 @@ const Signin = () => {
     validationSchema: Yup.object(signinSchema),
     onSubmit: async (values) => {
       try {
-      dispatch(setLoading(true));
-      const res = await loginAndStoreToken(values);
-      if (res.success) {
-        dispatch(setUser(res.user));
-        toast.success(res.message);
-      }
+        dispatch(setLoading(true));
+        const res = await loginAndStoreToken(values);
+        if (res.success) {
+          dispatch(setUser(res.user));
+          // redux-persist will keep user in localStorage/sessionStorage
+          toast.success(res.message);
+        }
       } catch (err: any) {
-      toast.error(err.response?.data?.message);
+        toast.error(err.response?.data?.message);
       } finally {
-      dispatch(setLoading(false));
+        dispatch(setLoading(false));
       }
     }
     });

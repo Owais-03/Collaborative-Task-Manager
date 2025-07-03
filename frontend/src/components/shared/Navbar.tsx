@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../redux/authSlice';
 
 type MenuItem = {
   label: string;
@@ -34,7 +35,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    dispatch({ type: 'auth/setUser', payload: null });
+    dispatch(setUser(null));
     navigate('/signin');
     setDrawerOpen(false);
   };

@@ -36,3 +36,5 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
+
+// No changes needed, redux-persist is already set up
