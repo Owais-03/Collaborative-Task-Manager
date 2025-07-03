@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // Define the state interface
 export interface AuthState {
@@ -38,3 +39,9 @@ const authSlice = createSlice({
 
 export const { setLoading, setUser } = authSlice.actions;
 export default authSlice.reducer;
+
+// In your login thunk or wherever you handle login:
+const response = await axios.post(`${USER_API_END_POINT}/signin`, payload, { withCredentials: true });
+if (response.data.token) {
+  localStorage.setItem('token', response.data.token);
+}
