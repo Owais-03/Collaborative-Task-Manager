@@ -2,9 +2,11 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import CookieConsent from './CookieConsent';
 
 function Footer() {
   return (
+    <>
     <footer className="bg-dark text-white mt-5 py-4">
       <div className="container">
       <div className="row align-items-start">
@@ -66,6 +68,8 @@ function Footer() {
       </div>
       </div>
     </footer>
+    <CookieConsent />
+    </>
   );
 }
 

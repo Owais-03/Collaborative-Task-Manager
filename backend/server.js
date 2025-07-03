@@ -12,6 +12,8 @@ import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.route.js";
 import taskRoute from "./routes/task.route.js";
 import User from "./models/user.model.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
@@ -111,6 +113,24 @@ app.use("/api/v1/task", taskRoute);
 app.get("/", (_, res) => {
   res.send("Server Running");
 });
+
+// Serve frontend in production
+if (process.env.NODE_ENV === "production") {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const clientBuildPath = path.join(__dirname, "../frontend/dist");
+
+  app.use(express.static(clientBuildPath));
+
+  app.get("*", (req, res, next) => {
+    // Only handle non-API routes
+    if (!req.path.startsWith("/api")) {
+      res.sendFile(path.join(clientBuildPath, "index.html"));
+    } else {
+      next();
+    }
+  });
+}
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
