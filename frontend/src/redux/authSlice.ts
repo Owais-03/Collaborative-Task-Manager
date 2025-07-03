@@ -40,8 +40,16 @@ const authSlice = createSlice({
 export const { setLoading, setUser } = authSlice.actions;
 export default authSlice.reducer;
 
-// In your login thunk or wherever you handle login:
-const response = await axios.post(`${USER_API_END_POINT}/signin`, payload, { withCredentials: true });
-if (response.data.token) {
-  localStorage.setItem('token', response.data.token);
-}
+// Helper function for login to store JWT token in localStorage
+export const loginAndStoreToken = async (payload: any) => {
+    const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_API_URL}/user/signin`,
+        payload,
+        { withCredentials: true }
+    );
+    if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+    }
+    return response.data;
+};
+
