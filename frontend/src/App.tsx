@@ -10,6 +10,11 @@ import ForgetPassword from './components/auth/ForgetPassword';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tasks from './components/pages/Tasks';
 import UserProtected from './components/auth/UserProtected';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/authSlice";
+import axios from "axios";
+import { USER_API_END_POINT } from "./utils/constant";
 
 const appRouter = createBrowserRouter([
     {
@@ -43,6 +48,29 @@ const appRouter = createBrowserRouter([
 ])
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Auto-login: fetch user if token exists
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get(`${USER_API_END_POINT}/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.data && res.data.user) {
+            dispatch(setUser(res.data.user));
+          }
+        })
+        .catch(() => {
+          // Invalid token, remove it
+          localStorage.removeItem("token");
+        });
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Container
