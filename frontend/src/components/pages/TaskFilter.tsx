@@ -17,7 +17,7 @@ interface TaskFilterProps {
 }
 
 const TaskFilter: React.FC<TaskFilterProps> = ({ filter, setFilter }) => {
-    const handleStatusChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const handleStatusChange = (e: any) => {
         setFilter({ ...filter, status: e.target.value as string });
     };
 

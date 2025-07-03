@@ -1,6 +1,6 @@
 import Navbar from '../shared/Navbar';
 import Footer from '../shared/Footer';
-import { Alert, Card } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { BsPeople, BsCheckCircle, BsCalendar } from 'react-icons/bs';
 
 

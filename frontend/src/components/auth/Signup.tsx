@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "../shared/Navbar";
-import { FormControl, FormControlLabel, RadioGroup, Radio, TextField, Button, CircularProgress, InputLabel, Typography, Box, Paper } from '@mui/material';
+import { TextField, Button, CircularProgress, InputLabel, Typography, Box, Paper } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from '../../utils/constant';

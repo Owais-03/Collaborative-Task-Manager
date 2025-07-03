@@ -17,7 +17,7 @@ interface TaskItemProps {
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdateStatus, onDelete }) => {
-    const handleStatusChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const handleStatusChange = (e: any) => {
         onUpdateStatus(task._id, e.target.value as string);
     };
 

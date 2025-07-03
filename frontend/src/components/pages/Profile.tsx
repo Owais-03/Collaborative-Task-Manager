@@ -65,11 +65,6 @@ const Profile = () => {
                   </Box>
                 </Grid>
               </Grid>
-               <Grid item xs={12} sm={6}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Typography variant="body1">Bio : {user?.profile?.bio}</Typography>
-                  </Box>
-                </Grid>
             </Box>
             <Box mt={4}>
               <Typography variant="body2" color="text.secondary">
